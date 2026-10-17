@@ -1,0 +1,17 @@
+node_modules/
+work/
+*.log
+*.tmp
+*.bak
+*.bundle
+desktop-pet.json
+桌宠诊断.txt
+预览-*.png
+临时-*.txt
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+.DS_Store

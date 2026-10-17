@@ -1,0 +1,14 @@
+{
+  "name": "peiban-zhuangchong",
+  "version": "1.0.0",
+  "description": "陪伴桌宠 · 桌面版",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "20080220",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.2.0"
+  }
+}

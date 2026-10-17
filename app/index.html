@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>陪伴桌宠</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="desk" id="desk">
+
+  <div class="desk-icons">
+    <div class="dicon"><span>🖥️</span><em>此电脑</em></div>
+    <div class="dicon"><span>📁</span><em>文档</em></div>
+    <div class="dicon"><span>🗑️</span><em>回收站</em></div>
+  </div>
+
+  <div class="topbar">
+    <span class="tip" id="tip">点它说话 · 双击打开面板 · 按住能拖</span>
+    <button class="tbtn" id="btnChar">小灯</button>
+    <button class="tbtn" id="btnBg">深色桌面</button>
+  </div>
+
+  <!-- ================= 开机待办提醒 ================= -->
+  <div class="remind" id="remind" hidden>
+    <button class="remind-x" id="remindX" aria-label="关闭">✕</button>
+    <div class="remind-h"><span class="bell">🔔</span><span id="remindTitle">你还有几件事没做</span></div>
+    <ul class="remind-l" id="remindList"></ul>
+    <div class="remind-btns">
+      <button class="p" id="remindOpen">去看看</button>
+      <button id="remindLater">晚点再说</button>
+    </div>
+  </div>
+
+  <!-- ================= 小精灵 ================= -->
+  <div class="pet" id="pet" data-motion="待机">
+    <div class="bubble" id="bubble"></div>
+    <canvas class="pet-img" id="petCv"></canvas>
+    <div class="pet-shadow" id="petShadow"></div>
+    <div class="zzz" id="zzz"><i>Z</i><i>Z</i><i>z</i></div>
+  </div>
+
+  <!-- ================= 主面板 ================= -->
+  <div class="panel" id="panel" data-theme="小灯" hidden>
+    <div class="pfx" id="pfx"></div>
+
+    <div class="ph">
+      <div class="ph-avatar"><canvas id="pAv"></canvas></div>
+      <div class="ph-txt">
+        <div class="ph-name" id="pName">小灯</div>
+        <div class="ph-sub" id="pSub">现在在：待机</div>
+      </div>
+      <button class="ph-close" id="pClose">✕</button>
+    </div>
+
+    <nav class="ptabs">
+      <button class="ptab on" data-tab="todo">待办</button>
+      <button class="ptab" data-tab="search">搜索</button>
+      <button class="ptab" data-tab="chat">聊天</button>
+      <button class="ptab" data-tab="play">互动</button>
+      <button class="ptab" data-tab="set">设置</button>
+    </nav>
+
+    <div class="pbody">
+
+      <div class="pane on" data-pane="todo">
+        <div class="row">
+          <input id="todoInput" class="inp" placeholder="加一件事，回车即可">
+          <button class="btn p" id="todoAdd">加</button>
+        </div>
+        <ul class="todos" id="todoList"></ul>
+        <p class="hint" id="todoHint">待办只存在你自己电脑上。</p>
+      </div>
+
+      <div class="pane" data-pane="search">
+        <div class="row">
+          <input id="sq" class="inp" placeholder="问点什么…">
+          <button class="btn p" id="sgo">问它</button>
+        </div>
+        <div class="sout" id="sout"></div>
+        <p class="hint" id="searchHint"></p>
+
+        <div class="shist">
+          <div class="shist-h">
+            <span>搜索记录</span>
+            <button class="linkbtn" id="shistClear">清空</button>
+          </div>
+          <ul class="shist-l" id="shistList"></ul>
+        </div>
+      </div>
+
+      <div class="pane" data-pane="chat">
+        <div class="chat" id="chatLog"></div>
+        <div class="row">
+          <input id="ci" class="inp" placeholder="和它说说话…">
+          <button class="btn p" id="csend">发送</button>
+        </div>
+        <p class="hint" id="chatHint"></p>
+      </div>
+
+      <div class="pane" data-pane="play">
+        <p class="hint" style="margin-top:0">点下面的按钮，看它做动作：</p>
+        <div class="acts">
+          <button class="act" data-act="打招呼">
+            <span class="ico">
+              <svg viewBox="0 0 32 32" aria-hidden="true">
+                <g fill="currentColor">
+                  <ellipse cx="17" cy="21" rx="7" ry="6"/>
+                  <ellipse cx="9.5" cy="14.5" rx="3.4" ry="4"/>
+                  <ellipse cx="15" cy="10.5" rx="3.4" ry="4"/>
+                  <ellipse cx="21.5" cy="10.5" rx="3.4" ry="4"/>
+                  <ellipse cx="26" cy="15" rx="3.2" ry="3.8"/>
+                </g>
+                <g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" opacity=".5">
+                  <path d="M6.5 6.5 3 4"/><path d="M8 3.2 6.6 1"/>
+                </g>
+              </svg>
+            </span>
+            <b>打招呼</b>
+          </button>
+
+          <button class="act" data-act="跳跃">
+            <span class="ico">
+              <svg viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M4 25 C7 7 25 7 28 25" fill="none" stroke="currentColor" stroke-width="2.2"
+                      stroke-linecap="round" stroke-dasharray="4 4.5" opacity=".42"/>
+                <circle cx="16" cy="10" r="4.8" fill="currentColor"/>
+                <ellipse cx="16" cy="27" rx="6.6" ry="2.2" fill="currentColor" opacity=".3"/>
+              </svg>
+            </span>
+            <b>跳一下</b>
+          </button>
+
+          <button class="act" data-act="惊讶">
+            <span class="ico">
+              <svg viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M16 2.5 l3.2 4.8 5.6-1.3 -1.3 5.6 4.8 3.2 -4.8 3.2 1.3 5.6 -5.6-1.3 -3.2 4.8 -3.2-4.8 -5.6 1.3 1.3-5.6 -4.8-3.2 4.8-3.2 -1.3-5.6 5.6 1.3 Z"
+                      fill="currentColor" opacity=".2"/>
+                <path d="M16 9.5 v8" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/>
+                <circle cx="16" cy="22.2" r="2.1" fill="currentColor"/>
+              </svg>
+            </span>
+            <b>吓一跳</b>
+          </button>
+
+          <button class="act" data-act="睡觉">
+            <span class="ico">
+              <svg viewBox="0 0 32 32" aria-hidden="true">
+                <defs><mask id="moonM">
+                  <rect width="32" height="32" fill="#fff"/>
+                  <circle cx="23" cy="11.5" r="9.5" fill="#000"/>
+                </mask></defs>
+                <circle cx="15" cy="16" r="11" fill="currentColor" mask="url(#moonM)"/>
+                <g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+                  <path d="M5 6.5 h4.4 l-4.4 4.8 h4.4"/>
+                  <path d="M12 1.6 h3 l-3 3.4 h3" stroke-width="1.7"/>
+                </g>
+              </svg>
+            </span>
+            <b>去睡觉</b>
+          </button>
+
+          <button class="act" data-act="醒">
+            <span class="ico">
+              <svg viewBox="0 0 32 32" aria-hidden="true">
+                <circle cx="16" cy="16" r="6.3" fill="currentColor"/>
+                <g stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+                  <path d="M16 2.6v3.4M16 26v3.4M2.6 16h3.4M26 16h3.4"/>
+                  <path d="M6.5 6.5 8.9 8.9M23.1 23.1 25.5 25.5M25.5 6.5 23.1 8.9M8.9 23.1 6.5 25.5"/>
+                </g>
+              </svg>
+            </span>
+            <b>叫醒它</b>
+          </button>
+        </div>
+        <p class="hint" style="margin-top:14px">它待机时会自言自语 —— 可以换一套台词听听：</p>
+        <div class="seg" id="packRow" style="margin-top:7px"></div>
+      </div>
+
+      <div class="pane" data-pane="set">
+        <div class="setrow">
+          <span>角色</span><div class="seg" id="segChar"></div>
+        </div>
+        <div class="setrow">
+          <span>大小</span><div class="seg" id="segSize"></div>
+        </div>
+        <div class="setrow">
+          <span>动作速度</span><div class="seg" id="segSpeed"></div>
+        </div>
+        <div class="setrow">
+          <span>显示影子</span><div class="seg" id="segShadow"></div>
+        </div>
+        <div class="setrow" id="loginRow" style="display:none">
+          <span>开机自启</span><div class="seg" id="segLogin"></div>
+        </div>
+
+        <div class="ai-box">
+          <div class="ai-h">🧠 选模型</div>
+          <div class="provs" id="provPicker"></div>
+
+          <div class="setrow" style="margin:9px 0 8px">
+            <span>模型</span>
+            <select class="inp sel" id="aiModel"></select>
+          </div>
+
+          <input id="aiKey" class="inp" type="password" placeholder="填这个服务商的 API Key">
+
+          <div class="row" style="margin-top:7px">
+            <button class="btn" id="aiTest">测试连接</button>
+            <button class="btn" id="aiBal">查余额</button>
+            <button class="btn p" id="aiSave">保存</button>
+          </div>
+          <div class="row" style="margin-top:7px">
+            <a class="btn go" id="aiTopup" target="_blank" rel="noopener">💳 去充值</a>
+            <a class="btn go" id="aiUsage" target="_blank" rel="noopener">📊 用量与账单</a>
+          </div>
+          <div class="row" style="margin-top:7px">
+            <a class="btn go" id="aiGetKey" target="_blank" rel="noopener">🔑 去哪申请 Key</a>
+          </div>
+          <p class="hint" id="aiMsg"></p>
+          <p class="balance" id="balMsg"></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= 任务栏 ================= -->
+  <div class="taskbar">
+    <div class="tb on" id="tbPet"><span class="tb-dot"></span>陪伴桌宠</div>
+    <div class="tb-sp"></div>
+    <div class="tb-clock" id="clock">--:--</div>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
